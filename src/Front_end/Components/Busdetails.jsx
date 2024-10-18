@@ -63,7 +63,7 @@ const BusDetails = () => {
                     alert('Session expired, please log in again.');
                     localStorage.removeItem('accessToken');
                      // Redirect to the login page
-                     navigate("/signup")
+                     navigate("/login")
                     }else {
                 console.error('Error checking route:', error);
                     }
@@ -126,8 +126,34 @@ const BusDetails = () => {
    const calculateArrivalTime = (departureTime, travelTimeHours) => {
     const departureDate = new Date(departureTime);
     departureDate.setHours(departureDate.getHours() + travelTimeHours);
-    return formatTo12Hour(departureDate.toISOString());
+    // return formatTo12Hour(departureDate.toISOString());
+    // return departureDate.toLocaleString();  This will return both the date and time in local format
+    return departureDate;
 };
+
+
+const formatToCustomDateTime = (dateTimeString) => {
+    const date = new Date(dateTimeString);
+  
+    // Get date components
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(date.getDate()).padStart(2, '0');
+  
+    // Get time components
+    let hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+  
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    const formattedHours = String(hours).padStart(2, '0');
+  
+    // Combine into desired format
+    return `${year}-${month}-${day} ${formattedHours}:${minutes} ${ampm}`;
+  };
+
+
 
     return (
         <div className='w-full h-auto bg-white mt-28 p-6 flex justify-start flex-col'>
@@ -149,7 +175,7 @@ const BusDetails = () => {
                             </div>
                             <div className='flex items-center'>
                                 <span className='text-gray-800 font-semibold mr-2 '>Date:</span>
-                                <span className='font-bold text-gray-600 w-24'>{date}</span>
+                                <span className='font-bold text-gray-600 w-24'>{date.split(' ')[0]}</span>
                             </div>
                         </div>
 
@@ -204,13 +230,13 @@ const BusDetails = () => {
                                         </p>
                                         <p className='flex flex-col font-semibold'>Departure Time
                                             {/* <p>{bus.departure_time}</p> */}
-                                            <p>{date} {formatTo12Hour(bus.departure_time)}</p>
+                                            <p>{date.split(' ')[0]} {formatTo12Hour(bus.departure_time)}</p>
                                         </p>
                                         <p className='flex flex-col '>Travel Time
                                             <p>{bus.travel_time} hr</p>
                                         </p>
                                         <p className='flex flex-col font-semibold'>Arrival Time
-                                            <p>{date} {calculateArrivalTime(bus.departure_time, parseInt(bus.travel_time))}</p>
+                                            <p> {formatToCustomDateTime(calculateArrivalTime(bus.departure_time, parseInt(bus.travel_time)))}</p>
                                         </p>
                                         <div className='flex flex-col'>
                                             <div className='flex'>
@@ -264,8 +290,10 @@ const BusDetails = () => {
                                             to={to}
                                             date={date}
                                             fare={bus.fare}
-                                            departuretime={`${date} ${formatTo12Hour(bus.departure_time)}`}
-                                            arrivaltime={`${date} ${calculateArrivalTime(bus.departure_time, parseInt(bus.travel_time))}`}
+                                            // departuretime={`${formatTo12Hour(bus.departure_time)}`}
+                                            departuretime={`${date.split(' ')[0]} ${formatTo12Hour(bus.departure_time)}`}
+                                            // arrivaltime={` ${calculateArrivalTime(bus.departure_time, parseInt(bus.travel_time))}`}
+                                            arrivaltime={formatToCustomDateTime(calculateArrivalTime(bus.departure_time, parseInt(bus.travel_time)))}
                                             BusNo={bus.bus_number}
                                             tripid={bus.trip_id}
                                         />

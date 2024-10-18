@@ -117,7 +117,7 @@ const cancelticket = async (req, res) => {
             });
         });
 
-        res.status(200).json({ message: 'Seat canceled successfully.' });
+        res.status(200).json({ message: 'Seat cancelled successfully.' });
 
     } catch (error) {
         console.error('Error canceling seat:', error);

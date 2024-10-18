@@ -45,9 +45,12 @@ const getbusesforroute = async (req, res) => {
             Routes R ON T.route_id = R.route_id
         WHERE 
             R.origin = ? AND R.destination = ?
-            AND DATE(T.departure_time) = ?;
+          
+             AND T.departure_time >= ?
+               ORDER BY 
+            T.departure_time;
     `;
-
+         // AND DATE(T.departure_time) = ?;
     try {
         const rows = await queryAsync(query, [origin, destination,date]);
         res.json(rows);

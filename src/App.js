@@ -11,6 +11,7 @@ import { UserProvider } from './Front_end/Components/Usercontext.jsx'
 
 
 const Signup = React.lazy(() => import("./Front_end/Components/Signup"))
+const Login=React.lazy(()=>import("./Front_end/Components/Login.jsx"))
 const Busdetails=React.lazy(()=>import("./Front_end/Components/Busdetails"))
 const Viewalloffers=React.lazy(()=>import("./Front_end/Components/Viewalloffers"))
 const Viewallbuses=React.lazy(()=>import("./Front_end/Components/Viewallbuses"))
@@ -56,6 +57,9 @@ function App() {
           <Route path="/" element={<MainLayout />} />
           <Route path="/signup" element={<AuthLayout />}>
             <Route index element={<Signup />} />
+          </Route>
+          <Route path="/login" element={<AuthLayout />}>
+            <Route index element={<Login />} />
           </Route>
           <Route path="/Busdetails" element={<AuthLayout />}>
             <Route index element={<Busdetails />} />

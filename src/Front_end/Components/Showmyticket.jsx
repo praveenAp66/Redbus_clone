@@ -19,7 +19,7 @@ const Showmyticket = () => {
 
     if (!accessToken) {
       alert('Please log in to continue.');
-      navigate("/signup")
+      navigate("/login")
       
     }
 
@@ -35,18 +35,35 @@ const Showmyticket = () => {
           }
       }    
       );
-      setBookingDetails(response.data);
+
+      // Convert server times to local times
+      const convertToLocalTime = (timeString) => {
+        const date = new Date(timeString);
+        return date.toLocaleTimeString(); // Convert to local time string
+      };
+
+      const updatedBookingDetails = {
+        ...response.data,
+        departure_time: new Date(response.data.departure_time).toLocaleString(),
+        arrival_time: new Date(response.data.arrival_time).toLocaleString(),
+        departure_date: new Date(response.data.departure_date).toLocaleDateString(),
+      };
+
+      setBookingDetails(updatedBookingDetails);
+      // setBookingDetails(response.data);
     } catch (err) {
       if (error.response && error.response.status === 401) {
         alert('Session expired, please log in again.');
         localStorage.removeItem('accessToken');
          // Redirect to the login page
-         navigate("/signup")
+         navigate("/login")
 }else {
       setError('Error fetching booking details. Please check your booking ID and .');
     }
   }
   };
+
+  
   const downloadPDF = () => {
     const doc = new jsPDF();
 
@@ -57,7 +74,7 @@ const Showmyticket = () => {
     doc.setFontSize(12);
     doc.text(`Booking ID: ${bookingDetails.booking_id}`, 20, 40);
     doc.text(`Bus Number: ${bookingDetails.bus_id} (${bookingDetails.bus_number})`, 20, 50);
-    doc.text(`Date: ${bookingDetails.departure_date}`, 20, 60);
+    doc.text(`Departure Date: ${bookingDetails.departure_date}`, 20, 60);
     doc.text(`Departure Time: ${bookingDetails.departure_time}`, 20, 70);
     doc.text(`Arrival Time: ${bookingDetails.arrival_time}`, 20, 80);
     doc.text(`Seat Number: ${bookingDetails.seat_number}`, 20, 90);
@@ -118,7 +135,7 @@ const Showmyticket = () => {
               <div className=' flex flex-col space-y-2'>
                 <span className="font-bold">Booking ID:</span>
                 <span className="font-bold">Bus Number:</span>
-                <span className="font-bold">Date:</span>
+                <span className="font-bold">Departure Date:</span>
                 <span className="font-bold">Departure Time:</span>
                 <span className="font-bold">Arrival Time:</span>
                 <span className="font-bold">Seat Number:</span>
@@ -149,9 +166,6 @@ const Showmyticket = () => {
                   </button>
 
                 </div>
-
-
-
               </div>
             </div>
           </div>

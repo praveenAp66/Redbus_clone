@@ -99,7 +99,7 @@ const PassengerForm = () => {
                alert("Please Login to Continue")
                 localStorage.removeItem('accessToken');
                 // Redirect to the login page
-                navigate("/signup");
+                navigate("/login");
         }else {
             console.error('Failed to freeze seats:', error);
             // Handle error (e.g., show a message to the user)

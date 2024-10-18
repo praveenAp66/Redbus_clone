@@ -171,7 +171,7 @@ const PaymentForm = () => {
         alert('Session expired, please log in again.');
         localStorage.removeItem('accessToken');
          // Redirect to the login page
-         navigate("/signup")
+         navigate("/login")
 }else {
       console.error('Payment initiation error:', error);
     }

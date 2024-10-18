@@ -19,7 +19,7 @@ const CancelSeat = () => {
 
     if (!accessToken) {
       alert('Please log in to continue.');
-      navigate("/signup")
+      navigate("/login")
       
     }
     
@@ -48,7 +48,7 @@ const CancelSeat = () => {
         alert('Session expired, please log in again.');
         localStorage.removeItem('accessToken');
          // Redirect to the login page
-         navigate("/signup")
+         navigate("/login")
            }else {
       console.error('Error fetching booking details:', error);
       toast.error('Failed to retrieve booking details');
@@ -77,7 +77,7 @@ const CancelSeat = () => {
           alert('Session expired, please log in again.');
           localStorage.removeItem('accessToken');
            // Redirect to the login page
-           navigate("/signup")
+           navigate("/login")
              }else {
         console.error('Error canceling seat:', error);
         toast.error( 'you can able to cancel the ticket before the departure date only!');
@@ -98,7 +98,6 @@ const CancelSeat = () => {
       }
     });
   };
-
 
   return (
     <div className='mt-28 p-6 w-full mx-auto bg-gradient-to-b from-gray-200 to-gray-50 space-y-4'>

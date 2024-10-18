@@ -22,7 +22,7 @@ const verifyAccessToken = (req, res, next) => {
     try {
         // Verify the access token
         const decoded = jwt.verify(token, process.env.JWT_SECRET); 
-        console.log("Successfully verified access token66");
+        // console.log("Successfully verified access token66");
         next(); // Continue to the next middleware or route handler
     } catch (error) {
         res.status(401).json({ message: 'Token is not valid' });

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-
-import Login from '../Components/Login'
+import { Link } from 'react-router-dom';
+// import Login from '../Components/Login'
 import { useUser } from '../Components/Usercontext'; 
 import api from '../../api'
 import { ToastContainer } from 'react-toastify';
@@ -17,7 +17,7 @@ const SignupForm = () => {
 
     const [errors, setErrors] = useState({});
     const [message, setMessage] = useState({ text: '', type: '' });
-    const [showSignup, setShowSignup] = useState(true); // State to toggle between forms
+    // const [showSignup, setShowSignup] = useState(true); // State to toggle between forms
     const { login } = useUser(); // Destructure login function from context
 
     const validate = () => {
@@ -79,14 +79,14 @@ const SignupForm = () => {
         }
     };
 
-    const showLoginForm = () => {
-        setShowSignup(false);
-    };
+    // const showLoginForm = () => {
+    //     setShowSignup(false);
+    // };
 
     return (
         <div className="max-w-md mx-auto mt-28 p-6 border border-gray-300 rounded-lg shadow-lg bg-gray-100 mb-4">
               <ToastContainer />
-            {showSignup ? (
+            {/* {showSignup ? ( */}
                 <div className="signup-form">
                     <h2 className="text-2xl font-bold mb-6 text-center">Signup</h2>
                     {message.text && (
@@ -161,13 +161,13 @@ const SignupForm = () => {
                     <div className='pt-2'>
                         <p>
                             If you already registered, please  login 
-                            <button className='text-blue-700 pl-1' onClick={showLoginForm}>Login</button>
+                            <Link  to={'/login'} className='text-blue-700 pl-1' >Login</Link>
                         </p>
                     </div>
                 </div>
-            ) : (
+            {/* ) : (
                <Login></Login>
-            )}
+            )} */}
         </div>
     );
 };

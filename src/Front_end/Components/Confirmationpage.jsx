@@ -19,6 +19,8 @@ const Confirmationpage = () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
 
+
+  
   const downloadPDF = () => {
     const doc = new jsPDF();
 
@@ -29,7 +31,7 @@ const Confirmationpage = () => {
     doc.setFontSize(12);
     doc.text(`Booking ID: ${bookingDetails.bookingId}`, 20, 40);
     doc.text(`Bus Number: ${bookingDetails.busNumber} (${BusNo})`, 20, 50);
-    doc.text(`Date: ${date}`, 20, 60);
+    doc.text(`Departure Date: ${date}`, 20, 60);
     doc.text(`Departure Time: ${departuretime}`, 20, 70);
     doc.text(`Arrival Time: ${arrivaltime}`, 20, 80);
     doc.text(`Seat Number: ${bookingDetails.seatNumber}`, 20, 90);

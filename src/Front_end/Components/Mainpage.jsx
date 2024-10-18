@@ -41,7 +41,7 @@ const Mainpage = () => {
                     alert('Session expired, please log in again.');
                     localStorage.removeItem('accessToken');
                      // Redirect to the login page
-                     navigate("/signup")
+                     navigate("/login")
             }else {
                 // Handle other errors
                 console.error('Error fetching cities:', error.message);
@@ -113,11 +113,18 @@ const Mainpage = () => {
 const handlesearch=()=>{
     if(from && to && dateRef.current.value)
     {
+
+         // Get current time in HH:mm format
+         const now = new Date();
+         const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+          // Combine selected date and current time
+          const selectedDateTime = `${dateRef.current.value} ${currentTime}`;
         navigate("/Busdetails",{
             state: {
                 from,
                 to,
-                date: dateRef.current.value
+                date: selectedDateTime
             }
         })
 
